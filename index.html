@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Joblane – Remote and tech jobs from around the world</title>
+<meta name="description" content="Fresh remote and tech jobs for job seekers worldwide, with AI summaries, skill tags and links to the original posting.">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f7f2;--card:#fff;--ink:#16231f;--mute:#5d6b66;--line:#dfe4dc;--brand:#0d5c4b;--brand-ink:#fff;--accent:#f0b429;--warn:#b3261e;--tag:#e6efe9;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1815;--card:#17231f;--ink:#e9efe9;--mute:#9db0a8;--line:#27372f;--brand:#46c2a2;--brand-ink:#062019;--tag:#20322b;--warn:#ff8a80}}
+:root[data-theme="dark"]{--bg:#0f1815;--card:#17231f;--ink:#e9efe9;--mute:#9db0a8;--line:#27372f;--brand:#46c2a2;--brand-ink:#062019;--tag:#20322b;--warn:#ff8a80}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Source Sans 3",system-ui,sans-serif}
+h1,h2,h3,.logo{font-family:"Bricolage Grotesque","Trebuchet MS",sans-serif;line-height:1.15;margin:0}
+a{color:var(--brand)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;flex-wrap:wrap}
+.logo{font-size:1.4rem;font-weight:800;color:var(--brand);text-decoration:none}
+.logo span{background:var(--accent);color:#16231f;padding:0 6px;border-radius:4px;margin-left:2px}
+nav{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--card);padding:8px 14px;border-radius:8px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;min-height:40px}
+.btn.p{background:var(--brand);color:var(--brand-ink);border-color:var(--brand);font-weight:600}
+.btn:hover{border-color:var(--brand)}
+.hero{padding:28px 0 18px}
+.hero h1{font-size:clamp(2rem,6vw,3.4rem);font-weight:800;max-width:15ch}
+.hero p{color:var(--mute);max-width:56ch;margin:10px 0 18px}
+.search{display:grid;grid-template-columns:1fr;gap:8px}
+.search input,.filters select,.f input,.f select,.f textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);min-height:44px}
+.filters{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}
+.chk{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);min-height:44px}
+.chk input{width:20px;height:20px}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:22px 0 10px;flex-wrap:wrap}
+.bar h2{font-size:1.3rem}
+.muted{color:var(--mute);font-size:.92rem}
+.list{display:grid;gap:10px}
+.job{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--brand);border-radius:10px;padding:14px;display:grid;gap:8px}
+.job h3{font-size:1.15rem}
+.job h3 button{all:unset;cursor:pointer;color:inherit}
+.job h3 button:hover{text-decoration:underline}
+.meta{display:flex;flex-wrap:wrap;gap:6px 14px;color:var(--mute);font-size:.92rem}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{background:var(--tag);padding:2px 9px;border-radius:99px;font-size:.84rem}
+.tag.r{background:var(--accent);color:#16231f;font-weight:600}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.sum{margin:0}
+.empty{padding:30px 16px;text-align:center;border:2px dashed var(--line);border-radius:10px}
+.cols{display:grid;gap:16px;margin:34px 0}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+.panel h2{font-size:1.25rem;margin-bottom:6px}
+.f{display:grid;gap:8px;margin-top:10px}
+.f label{font-weight:600;font-size:.92rem}
+dialog{width:min(680px,calc(100vw - 24px));max-height:calc(100dvh - 24px);border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);padding:0;overflow:auto}
+dialog::backdrop{background:rgba(0,0,0,.55)}
+.dlg{padding:20px;display:grid;gap:12px}
+.x{position:sticky;top:0;justify-self:end}
+footer{border-top:1px solid var(--line);padding:22px 0 30px;color:var(--mute);font-size:.9rem;margin-top:20px}
+#toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:50;max-width:90vw}
+#toast.on{opacity:1}
+.note{background:var(--tag);border-radius:8px;padding:8px 12px;font-size:.9rem;margin-top:12px}
+@media(min-width:700px){.search{grid-template-columns:1fr auto}.filters{grid-template-columns:repeat(5,1fr)}.cols{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <a class="logo" href="#top">Job<span>lane</span></a>
+  <nav aria-label="Main">
+    <button class="btn" id="savedBtn" aria-pressed="false">Saved jobs (<span id="savedN">0</span>)</button>
+    <a class="btn" href="#alerts">Job alerts</a>
+    <a class="btn p" href="#post">Post a job free</a>
+    <button class="btn" id="themeBtn" aria-label="Toggle dark mode">◐</button>
+  </nav>
+</header>
+
+<main id="top">
+<section class="hero">
+  <h1>Find your next job, anywhere in the world</h1>
+  <p>Remote, tech and entry-level listings from around the globe. Every job shows its source and sends you to the original apply page.</p>
+  <div class="search" role="search">
+    <input id="q" type="search" placeholder="Search title, company or skill (e.g. React, SEO)" aria-label="Search jobs">
+    <button class="btn p" id="go">Search jobs</button>
+  </div>
+  <div class="filters">
+    <select id="fCat" aria-label="Category"></select>
+    <select id="fLoc" aria-label="Location"></select>
+    <select id="fType" aria-label="Job type"></select>
+    <select id="fDate" aria-label="Posted">
+      <option value="0">Any date</option><option value="1">Last 24 hours</option><option value="7">Last 7 days</option><option value="30">Last 30 days</option>
+    </select>
+    <label class="chk"><input type="checkbox" id="fRem"> Remote only</label>
+  </div>
+</section>
+
+<div class="bar">
+  <h2 id="resTitle">Latest jobs</h2>
+  <div class="row"><span class="muted" id="count"></span>
+    <select id="sort" class="btn" aria-label="Sort"><option value="new">Newest first</option><option value="az">Title A–Z</option></select>
+    <button class="btn" id="reset">Clear filters</button></div>
+</div>
+<div class="list" id="list" aria-live="polite"></div>
+<div class="row" style="justify-content:center;margin-top:14px"><button class="btn" id="more">Show more jobs</button></div>
+<p class="note">Sample listings are shown here so you can test every feature. Live jobs appear once the ingestion script from the roadmap is connected to your database.</p>
+
+<section class="cols">
+  <div class="panel" id="alerts">
+    <h2>Get a daily job digest</h2>
+    <p class="muted">Tell us what you want and where to send it. One message per day, never one per job.</p>
+    <form class="f" id="alertForm">
+      <label for="aK">Keywords</label><input id="aK" required placeholder="e.g. frontend, intern">
+      <label for="aC">Channel</label><select id="aC"><option>Telegram</option><option>Email</option></select>
+      <label for="aT">Telegram username or email</label><input id="aT" required placeholder="@username or you@mail.com">
+      <button class="btn p" type="submit">Save my alert</button>
+    </form>
+  </div>
+  <div class="panel" id="post">
+    <h2>Post a job for free</h2>
+    <p class="muted">Employers, startups and local businesses anywhere can list openings. Every post is reviewed before it goes live.</p>
+    <form class="f" id="postForm">
+      <label for="pT">Job title</label><input id="pT" required maxlength="80">
+      <label for="pC">Company</label><input id="pC" required maxlength="60">
+      <label for="pL">City</label><input id="pL" required placeholder="Lahore">
+      <label for="pU">Apply link or email</label><input id="pU" required placeholder="https://… or hr@company.pk">
+      <label for="pD">Description</label><textarea id="pD" rows="4" required maxlength="1200"></textarea>
+      <button class="btn p" type="submit">Submit job</button>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <p><strong>Joblane</strong> collects jobs from public APIs and RSS feeds, credits each source and links to the original posting. Job data from Remotive, Arbeitnow, RemoteOK and We Work Remotely.</p>
+  <p>About · Contact · Privacy Policy · Terms (add these pages before applying for ads).</p>
+</footer>
+</div>
+
+<dialog id="dlg" aria-label="Job details"></dialog>
+<div id="toast" role="status"></div>
+
+<script>
+const TODAY=new Date();
+const iso=d=>{const x=new Date(TODAY);x.setDate(x.getDate()-d);return x.toISOString().slice(0,10)};
+const SRC={Remotive:"https://remotive.com",Arbeitnow:"https://www.arbeitnow.com",RemoteOK:"https://remoteok.com","We Work Remotely":"https://weworkremotely.com",Employer:"#post"};
+const J=[
+[1,"Junior React Developer","Nexa Labs","Lahore","Software","Full-time",0,["React","JavaScript","CSS"],"Build customer dashboards with a small product team. Fresh graduates with a portfolio are welcome.","Arbeitnow",0,"PKR 90k–130k"],
+[2,"Remote Customer Support Associate","Helpdesk Global","Remote","Support","Full-time",1,["English","Zendesk","Email"],"Handle chat and email tickets for a SaaS product. Training is provided and shifts overlap with European mornings.","Remotive",1,""],
+[3,"Python Data Intern","Karachi Analytics","Karachi","Data","Internship",0,["Python","SQL","Excel"],"Clean datasets, build simple reports and learn on the job beside two senior analysts. Three-month paid placement.","Employer",2,"PKR 40k/month"],
+[4,"Full-Stack Engineer (Node + Postgres)","Brightstack","Remote","Software","Contract",1,["Node.js","PostgreSQL","TypeScript"],"Ship features across API and UI for a fintech client. Six-month contract, extension likely.","RemoteOK",2,"$2,500–$3,500/mo"],
+[5,"SEO and Content Executive","Rankwise","Islamabad","Marketing","Full-time",0,["SEO","Writing","Analytics"],"Plan and publish search-focused articles and track rankings. Prior blogging experience counts.","Employer",3,"PKR 70k–95k"],
+[6,"UI/UX Designer","Pixelhaus","Lahore","Design","Full-time",0,["Figma","Prototyping","Research"],"Design mobile flows for a food-delivery app and test them with real users every sprint.","Arbeitnow",3,""],
+[7,"Remote Social Media Manager","Orbit Studio","Remote","Marketing","Part-time",1,["Canva","Copywriting","Instagram"],"Run daily posts and short reels for three lifestyle brands. Around 20 hours a week.","We Work Remotely",4,"$600–$900/mo"],
+[8,"WordPress Developer","Webline","Faisalabad","Software","Full-time",0,["WordPress","PHP","WooCommerce"],"Customise themes and plugins for retail clients and keep their stores fast and secure.","Employer",5,"PKR 60k–85k"],
+[9,"DevOps Engineer","CloudNine","Remote","Software","Full-time",1,["Docker","AWS","CI/CD"],"Own deployment pipelines and monitoring for a distributed team. Experience with GitHub Actions is a plus.","Remotive",6,"$3,000–$4,500/mo"],
+[10,"Graphic Designer (Fresher)","Colorbox","Karachi","Design","Full-time",0,["Photoshop","Illustrator","Branding"],"Create social graphics and brand kits. Send a small portfolio with your application.","Employer",7,"PKR 45k–60k"],
+[11,"Technical Writer","DocuFlow","Remote","Content","Contract",1,["Writing","API docs","Markdown"],"Write developer guides and release notes for an API company. Clear English is essential.","RemoteOK",9,"$25–$40/hr"],
+[12,"Android Developer","Appvera","Islamabad","Software","Full-time",0,["Kotlin","Android","Firebase"],"Maintain a ride-booking app used by 200k people and ship two releases a month.","Arbeitnow",11,""],
+[13,"Business Development Intern","StartHub PK","Lahore","Sales","Internship",0,["Communication","CRM","Research"],"Research leads, draft outreach emails and join client calls. Ideal for final-year business students.","Employer",13,"PKR 30k/month"],
+[14,"QA Tester (Remote, Fresher-friendly)","Testly","Remote","Software","Full-time",1,["Manual testing","Jira","Bug reports"],"Test web releases, log clear bug reports and learn automation with a mentor.","Remotive",15,"$700–$1,000/mo"],
+[15,"Old posting (should be hidden)","Expired Co","Lahore","Software","Full-time",0,["Java"],"This listing is older than 45 days, so the expiry rule hides it.","Arbeitnow",60,""]
+].map(a=>({id:a[0],title:a[1],company:a[2],location:a[3],category:a[4],type:a[5],remote:!!a[6],skills:a[7],summary:a[8],source:a[9],posted:iso(a[10]),age:a[10],salary:a[11]}));
+
+const $=id=>document.getElementById(id);
+let LIMIT=6,onlySaved=false;
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let saved=store.get("rd_saved",[]);
+const mine=store.get("rd_posted",[]);
+mine.forEach(m=>J.unshift(m));
+const live=()=>J.filter(j=>j.age<=45);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("on"),2600)}
+function fill(id,label,vals){$(id).innerHTML=`<option value="">${label}</option>`+[...new Set(vals)].sort().map(v=>`<option>${esc(v)}</option>`).join("")}
+function opts(){const l=live();const keep=["fCat","fLoc","fType"].map(i=>$(i).value);
+fill("fCat","All categories",l.map(j=>j.category));fill("fLoc","All locations",l.map(j=>j.location));fill("fType","All job types",l.map(j=>j.type));
+["fCat","fLoc","fType"].forEach((i,n)=>$(i).value=keep[n])}
+function ago(d){return d===0?"Today":d===1?"Yesterday":d+" days ago"}
+function filtered(){
+ const q=$("q").value.trim().toLowerCase(),c=$("fCat").value,l=$("fLoc").value,t=$("fType").value,d=+$("fDate").value,r=$("fRem").checked;
+ let a=live().filter(j=>(!q||[j.title,j.company,j.summary,j.skills.join(" ")].join(" ").toLowerCase().includes(q))&&(!c||j.category===c)&&(!l||j.location===l)&&(!t||j.type===t)&&(!d||j.age<=d)&&(!r||j.remote)&&(!onlySaved||saved.includes(j.id)));
+ a.sort($("sort").value==="az"?(x,y)=>x.title.localeCompare(y.title):(x,y)=>x.age-y.age);return a}
+function card(j){const s=saved.includes(j.id);
+return `<article class="job"><h3><button data-open="${j.id}">${esc(j.title)}</button></h3>
+<div class="meta"><span>${esc(j.company)}</span><span>${esc(j.location)}</span><span>${esc(j.type)}</span><span>${ago(j.age)}</span>${j.salary?`<span>${esc(j.salary)}</span>`:""}</div>
+<p class="sum">${esc(j.summary)}</p>
+<div class="tags">${j.remote?'<span class="tag r">Remote</span>':""}${j.skills.map(k=>`<span class="tag">${esc(k)}</span>`).join("")}</div>
+<div class="row"><button class="btn p" data-open="${j.id}">View details</button><button class="btn" data-save="${j.id}" aria-pressed="${s}">${s?"★ Saved":"☆ Save"}</button><span class="muted">via ${esc(j.source)}</span></div></article>`}
+function render(){
+ const a=filtered();$("count").textContent=a.length+(a.length===1?" job":" jobs");
+ $("resTitle").textContent=onlySaved?"Your saved jobs":"Latest jobs";
+ $("list").innerHTML=a.length?a.slice(0,LIMIT).map(card).join(""):`<div class="empty"><strong>No jobs match yet.</strong><p class="muted">Clear a filter or set up an alert and we will message you when something fits.</p></div>`;
+ $("more").hidden=a.length<=LIMIT;$("savedN").textContent=saved.length;$("savedBtn").setAttribute("aria-pressed",onlySaved)}
+function open(id,push=true){
+ const j=J.find(x=>x.id===id);if(!j)return;
+ const ld={"@context":"https://schema.org/","@type":"JobPosting",title:j.title,description:j.summary,datePosted:j.posted,validThrough:iso(-30),employmentType:j.type.toUpperCase().replace("-","_"),hiringOrganization:{"@type":"Organization",name:j.company},jobLocation:{"@type":"Place",address:{"@type":"PostalAddress",addressLocality:j.location,addressCountry:"PK"}},directApply:false};
+ if(j.remote)ld.jobLocationType="TELECOMMUTE";
+ let el=document.getElementById("ld");if(!el){el=document.createElement("script");el.type="application/ld+json";el.id="ld";document.head.appendChild(el)}
+ el.textContent=JSON.stringify(ld);
+ const link=j.apply||SRC[j.source]||"#";
+ $("dlg").innerHTML=`<div class="dlg"><button class="btn x" data-close aria-label="Close">✕ Close</button>
+ <h2>${esc(j.title)}</h2><div class="meta"><span>${esc(j.company)}</span><span>${esc(j.location)}</span><span>${esc(j.type)}</span><span>Posted ${j.posted}</span>${j.salary?`<span>${esc(j.salary)}</span>`:""}</div>
+ <div class="tags">${j.remote?'<span class="tag r">Remote</span>':""}${j.skills.map(k=>`<span class="tag">${esc(k)}</span>`).join("")}</div>
+ <h3>Summary</h3><p>${esc(j.summary)}</p>
+ <p class="muted">Source: <a href="${SRC[j.source]&&SRC[j.source][0]==="h"?SRC[j.source]:"#post"}" target="_blank" rel="noopener">${esc(j.source)}</a>. Always confirm details on the original posting before you apply.</p>
+ <div class="row"><a class="btn p" href="${esc(link)}" target="_blank" rel="noopener nofollow">Apply on ${esc(j.source)}</a>
+ <button class="btn" data-save="${j.id}">${saved.includes(j.id)?"★ Saved":"☆ Save"}</button>
+ <button class="btn" data-share="${j.id}">Share</button>
+ <button class="btn" data-report="${j.id}">Report this job</button></div></div>`;
+ if(!$("dlg").open)$("dlg").showModal();
+ if(push)try{history.replaceState(null,"","#job-"+id)}catch(e){}}
+document.addEventListener("click",e=>{
+ const t=e.target.closest("button");if(!t)return;
+ if(t.dataset.open)open(+t.dataset.open);
+ else if(t.dataset.save){const id=+t.dataset.save;saved=saved.includes(id)?saved.filter(x=>x!==id):[...saved,id];store.set("rd_saved",saved);render();if($("dlg").open)open(id,false);toast(saved.includes(id)?"Job saved":"Removed from saved")}
+ else if(t.dataset.close!==undefined)$("dlg").close();
+ else if(t.dataset.report){toast("Thanks. We will review this listing.");$("dlg").close()}
+ else if(t.dataset.share){const u=location.href;(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(()=>toast("Link copied"),()=>toast("Copy the address bar link to share"))}});
+$("dlg").addEventListener("click",e=>{if(e.target===$("dlg"))$("dlg").close()});
+$("dlg").addEventListener("close",()=>{try{history.replaceState(null,"","#top")}catch(e){}});
+["q","fCat","fLoc","fType","fDate","fRem","sort"].forEach(i=>$(i).addEventListener("input",()=>{LIMIT=6;render()}));
+$("go").onclick=()=>{LIMIT=6;render();$("list").scrollIntoView({behavior:"smooth"})};
+$("reset").onclick=()=>{["q","fCat","fLoc","fType"].forEach(i=>$(i).value="");$("fDate").value="0";$("fRem").checked=false;onlySaved=false;LIMIT=6;render()};
+$("more").onclick=()=>{LIMIT+=6;render()};
+$("savedBtn").onclick=()=>{onlySaved=!onlySaved;LIMIT=6;render();$("list").scrollIntoView({behavior:"smooth"})};
+$("themeBtn").onclick=()=>{const r=document.documentElement,d=r.dataset.theme==="dark"||(!r.dataset.theme&&matchMedia("(prefers-color-scheme:dark)").matches);r.dataset.theme=d?"light":"dark"};
+$("alertForm").onsubmit=e=>{e.preventDefault();const a=store.get("rd_alerts",[]);a.push({k:$("aK").value,c:$("aC").value,t:$("aT").value});store.set("rd_alerts",a);e.target.reset();toast("Alert saved. Your digest will start once the Telegram/email bot is connected.")};
+$("postForm").onsubmit=e=>{e.preventDefault();const u=$("pU").value.trim();
+ const j={id:Date.now(),title:$("pT").value,company:$("pC").value,location:$("pL").value.trim(),category:"Employer posted",type:"Full-time",remote:false,skills:["Local job"],summary:$("pD").value.slice(0,220),source:"Employer",posted:iso(0),age:0,salary:"",apply:/^https?:/.test(u)?u:"mailto:"+u};
+ J.unshift(j);mine.push(j);store.set("rd_posted",mine);e.target.reset();opts();render();toast("Job submitted. It appears here for you and goes public after review.")};
+function boot(){const m=location.hash.match(/^#job-(\d+)$/);if(m)open(+m[1],false)}
+fetch("jobs.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw 0;return r.json()}).then(d=>{
+ if(!Array.isArray(d)||!d.length)throw 0;
+ J.length=0;
+ d.forEach((j,i)=>{j.id=i+1;j.skills=j.skills||[];j.age=Math.max(0,Math.floor((Date.now()-new Date(j.posted))/864e5));J.push(j)});
+ mine.forEach(x=>J.unshift(x));
+ document.querySelector(".note").textContent="Live jobs from Remotive, Arbeitnow and RemoteOK, refreshed every 3 hours.";
+}).catch(()=>{}).finally(()=>{opts();render();boot()});
+</script>
+</body>
+</html>
